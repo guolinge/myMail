@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+  <title>Document</title>
+</head>
+<body>
+    <input type="file" name="logo" id="file">
+    <button onclick="doUpload()">提交</button>
+    <img src="" alt="">
+</body>
+<script>
+  function doUpload() {
+    let el = $('#file').get(0).files[0]
+    let formdata = new FormData()       // 创建一个空的formdata对象
+    formdata.append('hehe', el)
+    $.ajax({
+      url: 'http://localhost:3000/file/upload',
+      type: 'POST',
+      cache: false,         // 上传的文件不缓存下来
+      data: formdata,
+      processData: false,         // jq封装的ajax 默认会对数据进行格式化处理，原生的我就不知道了
+      contentType: false,         // 不使用默认上传头部，默认的会是json 或 www-formdata-url
+      success: function(data) {
+        console.log(data)
+        if (Number(data.err) === 0) {
+          $('img').attr('src', `http://localhost:3000${data.url}`)
+        } else {
+          alert('上传失败')
+        }
+      }
+    })
+  }
+</script>
+</html>
