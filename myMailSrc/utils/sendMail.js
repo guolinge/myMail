@@ -17,7 +17,7 @@ let transporter = nodemailer.createTransport({
 function send(mailUrl, title, subtitle, textValue) {
   // 邮件信息
   let mailObj = {
-    from: title, // sender address
+    from: '"国林哥" <1648381450@qq.com>', // sender address
     to: mailUrl, // list of receivers
     subject: subtitle, // Subject line
     text: textValue, // plain text body
@@ -47,7 +47,7 @@ function sayHelloToEveryBody () {
     if (result.length === 0) return
     for (let mailer of result) {
       let { toMailUrl, title, subtitle, textValue, timeStick, count, _id } = mailer
-      if (getGapTime(timeStick) < 50 && count > 0) {
+      if (getGapTime(timeStick) < 60 && count > 0) {
         console.log(mailer)
         send(toMailUrl, title, subtitle, textValue)
         mailer.count--
@@ -67,7 +67,7 @@ let init = function() {
   console.log('开始检测数据库')
   setInterval(() => {
     sayHelloToEveryBody()
-  }, 5000)
+  }, 30000)
 }
 
 module.exports = init
