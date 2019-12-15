@@ -29,7 +29,7 @@ app.use(bodyParser.json())
 // app.use('/user', userRouter)
 app.use('/file', fileRouter)
 app.use('/mail', mailRouter)
-app.use('/public', express.static(path.join(__dirname, './static')))
+app.use('/public', express.static(path.join(__dirname, './build')))
 
 app.listen(8081, () => {
   console.log('server start')
