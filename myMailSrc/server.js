@@ -1,10 +1,12 @@
 const express = require('express')
+const db = require('./db/connect')
 const path = require('path')
 var cors = require('cors')
+
 const app = express()
 
 // 引入路由
-// const userRouter = require('./router/userRouter.js')
+const mailRouter = require('./router/mailRouter.js')
 const fileRouter = require('./router/fileRouter')
 const bodyParser = require('body-parser')
 
@@ -17,7 +19,7 @@ app.all("*",function(req,res,next){
   //跨域允许的请求方式 
   res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
   if (req.method.toLowerCase() == 'options')
-      res.send(200);  //让options尝试请求快速结束
+    res.sendStatus(200);  //让options尝试请求快速结束
   else
       next();
 })
@@ -26,9 +28,9 @@ app.use(bodyParser.json())
 
 // app.use('/user', userRouter)
 app.use('/file', fileRouter)
-// app.use('/sendMail', express.static(path.join(__dirname, './build')))
+app.use('/mail', mailRouter)
 app.use('/public', express.static(path.join(__dirname, './static')))
 
-app.listen(3000, () => {
+app.listen(8081, () => {
   console.log('server start')
 })
